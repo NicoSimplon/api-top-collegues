@@ -1,5 +1,10 @@
 package dev.top.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
 /**
  * Représente un vote pour un des participant
  * 
@@ -8,8 +13,13 @@ package dev.top.dto;
  */
 public class Vote {
 	
+	@NotEmpty
+	@Max(100000)
+	@Min(-100000)
 	Boolean sensDuVote;
 	
+	@Email
+	@NotEmpty
 	String email;
 
 	/**

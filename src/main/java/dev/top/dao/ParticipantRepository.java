@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import dev.top.entities.Participant;
 
@@ -15,9 +14,9 @@ import dev.top.entities.Participant;
  * @author Nicolas
  *
  */
-public interface ParticipantRepository extends JpaRepository<Participant, Integer> {
+public interface ParticipantRepository extends JpaRepository<Participant, String> {
 
-	@Query("select p from Participant p where p.email = :email")
-	public Optional<Participant> findByEmail(@Param("email") String email);
+	@Query("select p from Participant p order by p.score desc")
+	public Optional<Participant> findAllOrderByScore();
 	
 }

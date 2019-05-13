@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.top.dto.ClassementDTO;
 import dev.top.dto.ParticipantDTO;
 import dev.top.dto.Vote;
-import dev.top.entities.Classement;
-import dev.top.services.ClassementService;
 import dev.top.services.ParticipantService;
 
 /**
@@ -31,10 +27,7 @@ import dev.top.services.ParticipantService;
 public class TopCollegueController {
 
 	@Autowired
-	ParticipantService servicePart;
-	
-	@Autowired
-	ClassementService serviceClass;
+	ParticipantService service;
 	
 	/**
 	 * Récupère les infos des collègues participants
@@ -45,27 +38,23 @@ public class TopCollegueController {
 	@Secured("ROLE_USER")
     public List<ParticipantDTO> findAllParticipant() {
 
-        return servicePart.findAllParticipants();
+        return service.findAllParticipants();
     }
 	
+	/**
+	 * Récupère un vote et retourne la liste des participants
+	 * avec le classement mis à jour
+	 * 
+	 * @param vote
+	 * @return
+	 */
 	@PostMapping
 	@Secured("ROLE_USER")
-    public ResponseEntity<ClassementDTO> vote(@RequestBody Vote vote) {
+    public ResponseEntity<List<ParticipantDTO>> vote(@RequestBody Vote vote) {
 
-        ClassementDTO classement = serviceClass.voteForParticipant(vote);
+		List<ParticipantDTO> listesAJour = service.voteForParticipant(vote);
         
-        return ResponseEntity.status(HttpStatus.OK).body(classement);
+        return ResponseEntity.status(HttpStatus.OK).body(listesAJour);
     }
-	
-	@GetMapping("/classement")
-	@Secured("ROLE_USER")
-	public ResponseEntity<ClassementDTO> getClassementByEmail(@RequestParam String email){
-		
-		Classement classement = serviceClass.findClassementByEmail(email).get();
-		ClassementDTO classementDto = new ClassementDTO(classement.getScore(), classement.getParticipant().getEmail());
-		
-		return ResponseEntity.status(HttpStatus.OK).body(classementDto);
-		
-	}
 	
 }

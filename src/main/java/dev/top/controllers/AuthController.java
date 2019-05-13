@@ -23,9 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import dev.top.dto.InfosAuthentification;
 import dev.top.dto.UtilisateurConnecte;
-import dev.top.entities.Classement;
 import dev.top.entities.Participant;
-import dev.top.services.ClassementService;
 import dev.top.services.ParticipantService;
 
 @RestController
@@ -42,9 +40,6 @@ public class AuthController {
 	
 	@Autowired
 	private ParticipantService service;
-	
-	@Autowired
-	private ClassementService serviceClass;
 	
 	@Autowired
 	RestTemplate rt;
@@ -73,9 +68,6 @@ public class AuthController {
 		
 		// On appelle le service permettant d'enregistrer le participant
 		service.saveNewParticipant(participant);
-		
-		// On initialise son classement
-		serviceClass.initialClassement(new Classement(0, participant));
 		
 		String jetonJWT = respHttp.getHeaders().getFirst("Set-Cookie").split(";")[0].split("=")[1];
 		

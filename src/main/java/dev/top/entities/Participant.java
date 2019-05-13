@@ -1,12 +1,8 @@
 package dev.top.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -20,11 +16,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "participants")
 public class Participant {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
 	@Email
 	@Size(min = 3)
 	@NotEmpty(message = "L'email ne peut pas être null ou vide.")
@@ -40,9 +33,7 @@ public class Participant {
 
 	private String photoUrl;
 	
-	@Valid
-	@OneToOne(mappedBy = "participant")
-	private Classement classement;
+	private Integer score = 0;
 	
 	public Participant(){
 		/**
@@ -61,20 +52,6 @@ public class Participant {
 		this.nom = nom;
 		this.prenoms = prenoms;
 		this.photoUrl = photoUrl;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	/**
@@ -134,17 +111,17 @@ public class Participant {
 	}
 
 	/**
-	 * @return the classement
+	 * @return the score
 	 */
-	public Classement getClassement() {
-		return classement;
+	public Integer getScore() {
+		return score;
 	}
 
 	/**
-	 * @param classement the classement to set
+	 * @param score the score to set
 	 */
-	public void setClassement(Classement classement) {
-		this.classement = classement;
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 }

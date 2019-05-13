@@ -17,6 +17,9 @@ public class ParticipantDTO {
 	
 	@NotEmpty
 	private String photoUrl;
+	
+	@NotEmpty
+	private Integer score;
 
 	/**
 	 * @return the email
@@ -31,14 +34,16 @@ public class ParticipantDTO {
 	 * @param nom
 	 * @param prenoms
 	 * @param photoUrl
+	 * @param score
 	 */
 	public ParticipantDTO(@Email @NotEmpty String email, @NotEmpty String nom, @NotEmpty String prenoms,
-			@NotEmpty String photoUrl) {
+			@NotEmpty String photoUrl, @NotEmpty Integer score) {
 		super();
 		this.email = email;
 		this.nom = nom;
 		this.prenoms = prenoms;
 		this.photoUrl = photoUrl;
+		this.score = score;
 	}
 
 
@@ -89,6 +94,20 @@ public class ParticipantDTO {
 	 */
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public Integer getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score the score to set
+	 */
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	
 }
