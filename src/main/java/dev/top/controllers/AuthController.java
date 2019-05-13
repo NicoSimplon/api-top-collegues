@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +47,13 @@ public class AuthController {
 
 	@PostMapping(value = "/auth")
 	public ResponseEntity authenticate(@RequestBody @Valid InfosAuthentification authenticationRequest,
-			HttpServletResponse response) throws URISyntaxException {
+			HttpServletResponse response, BindingResult bindingResult) throws URISyntaxException {
+		
+		if (bindingResult.hasErrors()) {
+			
+			throw new BadCredentialsException("Les données de connexions sont erronnées");
+		
+		}
 		
 		// On se connecte
 		ResponseEntity<UtilisateurConnecte> respHttp = rt.postForEntity("https://nicolas-collegues-api.herokuapp.com/auth", authenticationRequest, UtilisateurConnecte.class);

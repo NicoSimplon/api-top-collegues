@@ -2,11 +2,13 @@ package dev.top.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class InfosAuthentification {
 
 	@Email
 	@NotEmpty
+	@Size(min = 3)
 	private String email;
 
 	@NotEmpty

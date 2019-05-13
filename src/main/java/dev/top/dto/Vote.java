@@ -4,6 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * Représente un vote pour un des participant
@@ -19,6 +20,7 @@ public class Vote {
 	Boolean sensDuVote;
 	
 	@Email
+	@Size(min = 3)
 	@NotEmpty
 	String email;
 
