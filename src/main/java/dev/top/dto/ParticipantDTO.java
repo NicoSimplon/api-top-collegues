@@ -24,6 +24,23 @@ public class ParticipantDTO {
 	public String getEmail() {
 		return email;
 	}
+	
+	/**
+	 * 
+	 * @param email
+	 * @param nom
+	 * @param prenoms
+	 * @param photoUrl
+	 */
+	public ParticipantDTO(@Email @NotEmpty String email, @NotEmpty String nom, @NotEmpty String prenoms,
+			@NotEmpty String photoUrl) {
+		super();
+		this.email = email;
+		this.nom = nom;
+		this.prenoms = prenoms;
+		this.photoUrl = photoUrl;
+	}
+
 
 	/**
 	 * @param email the email to set

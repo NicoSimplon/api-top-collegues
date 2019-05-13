@@ -28,9 +28,9 @@ public class Classement {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Max(10000)
-	@Min(-10000)
-	private Integer score;
+	@Max(100000)
+	@Min(-100000)
+	private Integer score = 0;
 	
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
@@ -41,6 +41,11 @@ public class Classement {
 		/**
 		 * Constructeur pas défaut
 		 */
+	}
+
+	public Classement(@Max(100000) @Min(-100000) Integer score, @Valid Participant participant) {
+		this.score = score;
+		this.participant = participant;
 	}
 
 	/**
