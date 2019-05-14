@@ -7,12 +7,15 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import dev.top.dao.ParticipantRepository;
+import dev.top.dao.VoteRepository;
 import dev.top.dto.ParticipantDTO;
-import dev.top.dto.Vote;
+import dev.top.dto.VoteDTO;
 import dev.top.entities.Participant;
+import dev.top.entities.Vote;
 import dev.top.exceptions.ParticipantNotFound;
 
 @Service
@@ -20,6 +23,9 @@ public class ParticipantService {
 
 	@Autowired
 	ParticipantRepository repo;
+	
+	@Autowired
+	VoteRepository repoVote;
 	
 	/**
 	 * Permet de sauvegarder un nouveau participant en base de données
@@ -62,23 +68,19 @@ public class ParticipantService {
 	 * @return List<ParticipantDTO> Renvoie le nouveau classement
 	 */
 	@Transactional
-	public List<ParticipantDTO> voteForParticipant(Vote vote){
+	public List<ParticipantDTO> voteForParticipant(VoteDTO vote) {
 		
 		Optional<Participant> participant = this.findParticipantByEmail(vote.getEmail());
+
+		Vote vot = new Vote(vote.getEmail(), vote.getSensDuVote(), SecurityContextHolder.getContext().getAuthentication().getName());
 		
 		if(participant.isPresent()) {
 			
-			Participant p = participant.get();
+			repoVote.save(vot);
 			
-			if (vote.getSensDuVote()) {
-				
-				p.setScore(p.getScore() + 100);
-				
-			} else {
-
-				p.setScore(p.getScore() - 100);
-				
-			}
+			Participant part = participant.get();
+			
+			part.setScore((repoVote.findVoteByEmail(vot.getEmailDuCollegue())) * 100);
 			
 		} else {
 			

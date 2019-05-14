@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.top.dto.ParticipantDTO;
-import dev.top.dto.Vote;
+import dev.top.dto.VoteDTO;
 import dev.top.services.ParticipantService;
 
 /**
@@ -36,7 +36,7 @@ public class TopCollegueController {
 	 * 
 	 * @return List<ParticipantDTO>
 	 */
-	@GetMapping
+	@GetMapping(value = "/classement")
 	@Secured("ROLE_USER")
     public List<ParticipantDTO> findAllParticipant() {
 
@@ -50,9 +50,9 @@ public class TopCollegueController {
 	 * @param vote
 	 * @return
 	 */
-	@PostMapping
+	@PostMapping(value = "/vote")
 	@Secured("ROLE_USER")
-    public ResponseEntity<List<ParticipantDTO>> vote(@RequestBody @Valid Vote vote) {
+    public ResponseEntity<List<ParticipantDTO>> vote(@RequestBody @Valid VoteDTO vote) {
 
 		List<ParticipantDTO> listesAJour = service.voteForParticipant(vote);
         

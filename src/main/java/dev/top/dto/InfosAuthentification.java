@@ -6,12 +6,12 @@ import javax.validation.constraints.Size;
 
 public class InfosAuthentification {
 
-	@Email
-	@NotEmpty
-	@Size(min = 3)
+	@Email(message = "L'email renseigné est invalide")
+	@NotEmpty(message = "L'email renseigné est invalide")
+	@Size(min = 3, message = "L'email renseigné est invalide")
 	private String email;
 
-	@NotEmpty
+	@NotEmpty(message = "Le mot de passe renseigné est invalide")
 	private String motDePasse;
 	
 	private String photoUrl;

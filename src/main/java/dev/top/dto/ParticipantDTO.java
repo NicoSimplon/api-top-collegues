@@ -5,20 +5,20 @@ import javax.validation.constraints.NotEmpty;
 
 public class ParticipantDTO {
 
-	@Email
-	@NotEmpty
+	@Email(message = "L'email est invalide")
+	@NotEmpty(message = "L'email est invalide")
 	private String email;
 	
-	@NotEmpty
+	@NotEmpty(message = "Le nom est invalide")
 	private String nom;
 	
-	@NotEmpty
+	@NotEmpty(message = "Le prénom est invalide")
 	private String prenoms;
 	
-	@NotEmpty
+	@NotEmpty(message = "L'url de la photo est invalide")
 	private String photoUrl;
 	
-	@NotEmpty
+	@NotEmpty(message = "Le score est invalide")
 	private Integer score;
 
 	/**

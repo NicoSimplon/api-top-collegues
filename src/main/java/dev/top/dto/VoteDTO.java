@@ -1,8 +1,6 @@
 package dev.top.dto;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -12,16 +10,13 @@ import javax.validation.constraints.Size;
  * @author Nicolas
  *
  */
-public class Vote {
+public class VoteDTO {
 	
-	@NotEmpty
-	@Max(100000)
-	@Min(-100000)
 	Boolean sensDuVote;
 	
-	@Email
-	@Size(min = 3)
-	@NotEmpty
+	@Email(message = "L'email est invalide")
+	@Size(min = 3, message = "L'email est invalide")
+	@NotEmpty(message = "L'email est invalide")
 	String email;
 
 	/**
