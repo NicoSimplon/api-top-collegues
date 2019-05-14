@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.top.dto.ParticipantDTO;
 import dev.top.dto.Vote;
-import dev.top.exceptions.BadRequestException;
 import dev.top.services.ParticipantService;
 
 /**
@@ -54,11 +52,7 @@ public class TopCollegueController {
 	 */
 	@PostMapping
 	@Secured("ROLE_USER")
-    public ResponseEntity<List<ParticipantDTO>> vote(@RequestBody @Valid Vote vote, BindingResult bindingResult) {
-		
-		if (bindingResult.hasErrors()) {
-			throw new BadRequestException();
-		}
+    public ResponseEntity<List<ParticipantDTO>> vote(@RequestBody @Valid Vote vote) {
 
 		List<ParticipantDTO> listesAJour = service.voteForParticipant(vote);
         
