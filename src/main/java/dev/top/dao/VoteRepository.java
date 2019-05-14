@@ -10,7 +10,10 @@ import dev.top.entities.Vote;
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
-	@Query("select count(v) from Vote v where v.emailDuCollegue = :email ")
-	Integer findVoteByEmail(@Param("email") String email);
+	@Query("select count(v) from Vote v where v.emailDuCollegue = :email and v.sensDuVote = true ")
+	Integer findVotePositifByEmail(@Param("email") String email);
+	
+	@Query("select count(v) from Vote v where v.emailDuCollegue = :email and v.sensDuVote = false ")
+	Integer findVoteNegatifByEmail(@Param("email") String email);
 	
 }

@@ -14,13 +14,5 @@ public class MyExceptionHandler {
 		String bodyOfResponse = "Participant non trouvé";
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(bodyOfResponse);
 	 }
-	
-	@ExceptionHandler(value = { BadRequestException.class })
-	protected ResponseEntity<Object> handleConflictBadRequestException(RuntimeException ex, WebRequest request) {
-		String bodyOfResponse = "Les données du vote sont erronées";
-	    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bodyOfResponse);
-	 }
-	
-	
-	
+		
 }

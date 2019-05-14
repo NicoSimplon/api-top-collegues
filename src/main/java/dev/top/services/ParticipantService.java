@@ -80,7 +80,9 @@ public class ParticipantService {
 			
 			Participant part = participant.get();
 			
-			part.setScore((repoVote.findVoteByEmail(vot.getEmailDuCollegue())) * 100);
+			part.setScore(
+				(repoVote.findVotePositifByEmail(vot.getEmailDuCollegue()) - repoVote.findVoteNegatifByEmail(vot.getEmailDuCollegue())) * 100
+			);
 			
 		} else {
 			
