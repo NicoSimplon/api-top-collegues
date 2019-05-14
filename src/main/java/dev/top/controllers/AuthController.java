@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,8 +46,11 @@ public class AuthController {
 	
 	@Autowired
 	RestTemplate rt;
+	
+	UtilisateurConnecte userCo;
 
 	@PostMapping(value = "/auth")
+	@Secured(value = "ROLE_USER")
 	public ResponseEntity authenticate(@RequestBody @Valid InfosAuthentification authenticationRequest,
 			HttpServletResponse response, BindingResult bindingResult) throws URISyntaxException {
 		
@@ -84,10 +89,17 @@ public class AuthController {
 		authCookie.setPath("/");
 		response.addCookie(authCookie);
 
+		this.userCo = respHttp.getBody();
+		
 		return ResponseEntity.ok().body(
-				respHttp.getBody()
+				this.userCo
 		);
 
+	}
+	
+	@GetMapping(value = "/me")
+	public ResponseEntity<UtilisateurConnecte> getUserConnecte() {
+		return ResponseEntity.status(HttpStatus.OK).body(this.userCo);
 	}
 	
 	@ExceptionHandler(BadCredentialsException.class)
