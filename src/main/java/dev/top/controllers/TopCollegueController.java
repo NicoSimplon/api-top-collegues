@@ -45,7 +45,7 @@ public class TopCollegueController {
 	
 	/**
 	 * Récupère un vote et retourne la liste des participants
-	 * avec le classement mis à jour
+	 * avec le score mis à jour
 	 * 
 	 * @param vote
 	 * @return

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +25,10 @@ public class Vote {
 	private LocalDate dateDuVote = LocalDate.now();
 	
 	private Boolean sensDuVote;
+	
+	@ManyToOne
+	@JoinColumn(name = "votant_email")
+	private Participant participant;
 	
 	public Vote(){
 		/**
@@ -104,6 +110,20 @@ public class Vote {
 	 */
 	public void setSensDuVote(Boolean sensDuVote) {
 		this.sensDuVote = sensDuVote;
+	}
+
+	/**
+	 * @return the participant
+	 */
+	public Participant getParticipant() {
+		return participant;
+	}
+
+	/**
+	 * @param participant the participant to set
+	 */
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
 	}
 
 }

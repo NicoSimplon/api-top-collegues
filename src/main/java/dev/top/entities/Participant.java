@@ -1,7 +1,10 @@
 package dev.top.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +37,9 @@ public class Participant {
 	private String photoUrl;
 	
 	private Integer score = 0;
+	
+	@OneToMany(mappedBy = "participant")
+	private List<Vote> votes;
 	
 	public Participant(){
 		/**
@@ -122,6 +128,20 @@ public class Participant {
 	 */
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	/**
+	 * @return the votes
+	 */
+	public List<Vote> getVotes() {
+		return votes;
+	}
+
+	/**
+	 * @param votes the votes to set
+	 */
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
 	}
 
 }
