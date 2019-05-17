@@ -71,36 +71,29 @@ public class ParticipantService {
 	 */
 	@Transactional
 	public List<ParticipantDTO> voteForParticipant(VoteDTO vote) {
-		
-		Optional<Participant> participant = this.findParticipantByEmail(vote.getEmail());
 
-		Vote vot = new Vote(vote.getEmail(), vote.getSensDuVote(), SecurityContextHolder.getContext().getAuthentication().getName());
-		
-		if(participant.isPresent()) {
-			
-			if(vot.getEmailDuCollegue().equals(vot.getEmailDuVotant())){
-				throw new VoteInvalideException("Vous ne pouvez pas voter pour vous même");
-			}
-				
-			if(repoVote.findVoteByEmail(vot.getEmailDuVotant(), vot.getEmailDuCollegue()) > 0) {
-				throw new VoteInvalideException("Vous ne pouvez pas voter pour le même collègue plusieurs fois");
-			}
-				repoVote.save(vot);
-					
-				Participant part = participant.get();
-					
-				part.setScore(
-					(repoVote.findVotePositifByEmail(vot.getEmailDuCollegue()) - repoVote.findVoteNegatifByEmail(vot.getEmailDuCollegue())) * 100
-				);				
-				
-		} else {
-			
-			throw new ParticipantNotFound("Le collègue pour lequel vous avez voté n'existe pas.");
-		
+		Participant participant = this.findParticipantByEmail(vote.getEmail()).orElseThrow(ParticipantNotFound::new);
+
+		Participant votant = this
+				.findParticipantByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+				.orElseThrow(ParticipantNotFound::new);
+
+		Vote vot = new Vote(vote.getEmail(), vote.getSensDuVote(), votant);
+
+		if (vot.getEmailDuCollegue().equals(vot.getVotant().getEmail())) {
+			throw new VoteInvalideException("Vous ne pouvez pas voter pour vous même");
 		}
-		
+
+		if (repoVote.findVoteByEmail(vot.getVotant().getEmail(), vot.getEmailDuCollegue()) > 0) {
+			throw new VoteInvalideException("Vous ne pouvez pas voter pour le même collègue plusieurs fois");
+		}
+		repoVote.save(vot);
+
+		participant.setScore((repoVote.findVotePositifByEmail(vot.getEmailDuCollegue())
+				- repoVote.findVoteNegatifByEmail(vot.getEmailDuCollegue())) * 100);
+
 		return this.findAllParticipants();
-		
+
 	}
 
 }

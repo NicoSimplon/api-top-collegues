@@ -10,11 +10,8 @@ public class ParticipantNotFound extends RuntimeException {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParticipantNotFound.class);
 
 	public ParticipantNotFound() {
-
+		LOGGER.error("Il n'y a aucun participant ayant cet email");
 	}
 
-	public ParticipantNotFound(String msg) {
-		LOGGER.error(msg);
-	}
 
 }

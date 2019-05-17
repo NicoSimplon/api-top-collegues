@@ -38,7 +38,7 @@ public class Participant {
 	
 	private Integer score = 0;
 	
-	@OneToMany(mappedBy = "participant")
+	@OneToMany(mappedBy = "votant")
 	private List<Vote> votes;
 	
 	public Participant(){

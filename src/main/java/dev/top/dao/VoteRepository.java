@@ -16,7 +16,7 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 	@Query("select count(v) from Vote v where v.emailDuCollegue = :email and v.sensDuVote = false ")
 	Integer findVoteNegatifByEmail(@Param("email") String email);
 	
-	@Query("select count(v) from Vote v where v.emailDuVotant = :emailVotant and v.emailDuCollegue = :emailCollegue")
+	@Query("select count(v) from Vote v where v.votant.email = :emailVotant and v.emailDuCollegue = :emailCollegue")
 	Integer findVoteByEmail(@Param("emailVotant") String emailVotant, @Param("emailCollegue") String emailCollegue);
 	
 }

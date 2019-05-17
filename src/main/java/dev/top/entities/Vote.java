@@ -9,7 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
+/**
+ * Entité représentant un vote
+ * 
+ * @author Nicolas
+ *
+ */
 @Entity
 @Table(name = "votes")
 public class Vote {
@@ -18,8 +25,7 @@ public class Vote {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	private String emailDuVotant;
-	
+	@Email
 	private String emailDuCollegue;
 	
 	private LocalDate dateDuVote = LocalDate.now();
@@ -28,7 +34,7 @@ public class Vote {
 	
 	@ManyToOne
 	@JoinColumn(name = "votant_email")
-	private Participant participant;
+	private Participant votant;
 	
 	public Vote(){
 		/**
@@ -36,10 +42,10 @@ public class Vote {
 		 */
 	}
 	
-	public Vote(String emailDuCollegue, Boolean sensDuVote, String emailDuVotant) {
+	public Vote(String emailDuCollegue, Boolean sensDuVote, Participant votant) {
 		this.emailDuCollegue = emailDuCollegue;
 		this.sensDuVote = sensDuVote;
-		this.emailDuVotant = emailDuVotant;
+		this.votant = votant;
 	}
 
 	/**
@@ -54,20 +60,6 @@ public class Vote {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the emailDuVotant
-	 */
-	public String getEmailDuVotant() {
-		return emailDuVotant;
-	}
-
-	/**
-	 * @param emailDuVotant the emailDuVotant to set
-	 */
-	public void setEmailDuVotant(String emailDuVotant) {
-		this.emailDuVotant = emailDuVotant;
 	}
 
 	/**
@@ -113,17 +105,18 @@ public class Vote {
 	}
 
 	/**
-	 * @return the participant
+	 * @return the votant
 	 */
-	public Participant getParticipant() {
-		return participant;
+	public Participant getVotant() {
+		return votant;
 	}
 
 	/**
-	 * @param participant the participant to set
+	 * @param votant the votant to set
 	 */
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
+	public void setVotant(Participant votant) {
+		this.votant = votant;
 	}
+
 
 }
